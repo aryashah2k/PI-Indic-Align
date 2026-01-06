@@ -1,0 +1,39 @@
+{
+  "task": "t3_reverse_retrieval",
+  "backbone": "bge-m3",
+  "lang_or_pair": "asm->tam",
+  "split_tag": "dev",
+  "timestamp": "20251002T081957Z",
+  "metrics": {
+    "recall": {
+      "1": 0.18052413461730965,
+      "5": 0.29660253458527697,
+      "10": 0.3594666559891089
+    },
+    "mrr@10": 0.23137376314316793,
+    "ndcg@10": 0.2616151565284252
+  },
+  "meta": {
+    "config_path": "configs/prod_t3.yaml",
+    "seed": 42,
+    "system": {
+      "hostname": "d5e5b2e67070",
+      "python": "3.10.12",
+      "time_utc": "20251002T081957Z",
+      "git_hash": null,
+      "packages": {
+        "sentence-transformers": "3.0.1",
+        "torch": "2.8.0",
+        "numpy": "2.2.6",
+        "scikit-learn": "1.5.1",
+        "ranx": "0.3.20",
+        "rank-bm25": "0.2.2",
+        "netcal": "1.3.5",
+        "rapidfuzz": "3.9.6"
+      },
+      "cuda_available": true,
+      "cuda_device_count": 2,
+      "cuda_device": "NVIDIA RTX A6000"
+    }
+  }
+}

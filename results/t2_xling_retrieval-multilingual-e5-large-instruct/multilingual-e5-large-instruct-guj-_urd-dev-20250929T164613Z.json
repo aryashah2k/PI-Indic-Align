@@ -1,0 +1,39 @@
+{
+  "task": "t2_xling_retrieval",
+  "backbone": "intfloat/multilingual-e5-large-instruct",
+  "lang_or_pair": "guj->urd",
+  "split_tag": "dev",
+  "timestamp": "20250929T164613Z",
+  "metrics": {
+    "recall": {
+      "1": 0.20983403071132556,
+      "5": 0.3473743218082444,
+      "10": 0.4139422210654868
+    },
+    "mrr@10": 0.2693715844129266,
+    "ndcg@10": 0.3036351304354551
+  },
+  "meta": {
+    "config_path": "configs/prod_t1t3.yaml",
+    "seed": 42,
+    "system": {
+      "hostname": "43b1f41be722",
+      "python": "3.10.12",
+      "time_utc": "20250929T164613Z",
+      "git_hash": null,
+      "packages": {
+        "sentence-transformers": "3.0.1",
+        "torch": "2.8.0",
+        "numpy": "2.2.6",
+        "scikit-learn": "1.5.1",
+        "ranx": "0.3.20",
+        "rank-bm25": "0.2.2",
+        "netcal": "1.3.5",
+        "rapidfuzz": "3.9.6"
+      },
+      "cuda_available": true,
+      "cuda_device_count": 2,
+      "cuda_device": "NVIDIA RTX A6000"
+    }
+  }
+}

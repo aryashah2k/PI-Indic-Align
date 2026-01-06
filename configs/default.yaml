@@ -1,0 +1,83 @@
+seed: 42
+device: auto  # 'cpu', 'cuda', or 'auto'
+num_workers: 0
+batch_size: 32
+
+# Tasks to run
+# Options: t1_mono_retrieval, t2_xling_retrieval, t3_reverse_retrieval, t4_classification, t5_hardneg_eval
+tasks: [t1_mono_retrieval, t3_reverse_retrieval, t4_classification]
+
+# Backbones to evaluate
+backbones:
+  - bge-m3
+
+# Languages and language pairs (ISO-639-3 codes expected in filenames)
+languages: [hin, tam]
+language_pairs: ["hin->tam", "tam->hin"]
+
+# Splits
+splits:
+  random:
+    train_frac: 0.7
+    dev_frac: 0.1
+    test_frac: 0.2
+    seed: 42
+  lolo:
+    target: null  # e.g., 'hin'
+  filters:
+    shot_types: []  # e.g., ["0-shot", "2-shot"]
+
+# Retrieval config
+top_k: [1, 5, 10]
+
+# BM25 baseline config
+bm25:
+  tokenizer: whitespace  # 'whitespace'
+  k1: 1.5
+  b: 0.75
+
+# Classification config
+classification:
+  estimator: logistic_regression  # 'logistic_regression' or 'linear_svc'
+  params:
+    penalty: l2
+    solver: liblinear
+    max_iter: 200
+    class_weight: null
+    C: 1.0
+  calibration:
+    method: temperature  # 'temperature' or 'histogram'
+    bins: 15
+
+# Hard negatives
+hard_negatives:
+  metric: token_set_ratio  # rapidfuzz metric name
+  threshold: 70
+  max_negatives_per_query: 10
+
+# Embedding prompts per backbone (follow model cards)
+embedding_prompts:
+  bge-m3:
+    query_prefix: "Represent this sentence for searching relevant passages: "
+    doc_prefix: "Represent this sentence for retrieving relevant passages: "
+  e5-large-instruct:
+    query_prefix: "Instruct: "
+    doc_prefix: "Passage: "
+  labse:
+    query_prefix: ""
+    doc_prefix: ""
+  indic-sbert:
+    query_prefix: ""
+    doc_prefix: ""
+  indic-sbert-nli:
+    query_prefix: ""
+    doc_prefix: ""
+
+logging:
+  level: INFO
+  warnings_as_errors: true
+
+output:
+  results_dir: results
+  visualizations_dir: visualizations
+  logs_dir: results/logs

@@ -1,0 +1,39 @@
+{
+  "task": "t3_reverse_retrieval",
+  "backbone": "l3cube-pune/indic-sentence-bert-nli",
+  "lang_or_pair": "ory",
+  "split_tag": "dev",
+  "timestamp": "20251006T040116Z",
+  "metrics": {
+    "recall": {
+      "1": 0.18332699353340406,
+      "5": 0.3107369516907245,
+      "10": 0.37390137940699514
+    },
+    "mrr@10": 0.23806844092085042,
+    "ndcg@10": 0.27020295109799675
+  },
+  "meta": {
+    "config_path": "configs/prod_t3.yaml",
+    "seed": 42,
+    "system": {
+      "hostname": "8b861967a889",
+      "python": "3.10.12",
+      "time_utc": "20251006T040116Z",
+      "git_hash": null,
+      "packages": {
+        "sentence-transformers": "3.0.1",
+        "torch": "2.8.0",
+        "numpy": "2.2.6",
+        "scikit-learn": "1.5.1",
+        "ranx": "0.3.20",
+        "rank-bm25": "0.2.2",
+        "netcal": "1.3.5",
+        "rapidfuzz": "3.9.6"
+      },
+      "cuda_available": true,
+      "cuda_device_count": 2,
+      "cuda_device": "NVIDIA RTX A6000"
+    }
+  }
+}

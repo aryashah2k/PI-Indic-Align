@@ -1,0 +1,88 @@
+seed: 42
+device: auto
+num_workers: 0
+batch_size: 64
+
+# Indic-focused retrieval: T1, T2, T3 across all languages and pairs
+tasks: [t1_mono_retrieval, t2_xling_retrieval, t3_reverse_retrieval]
+
+backbones:
+  - sentence-transformers/paraphrase-multilingual-mpnet-base-v2
+  - sentence-transformers/distiluse-base-multilingual-cased-v2
+  - sentence-transformers/paraphrase-xlm-r-multilingual-v1
+  # - intfloat/multilingual-e5-large-instruct
+  - thenlper/gte-multilingual-base
+  # - sentence-transformers/LaBSE
+  # - l3cube-pune/indic-sentence-similarity-sbert
+  # - l3cube-pune/indic-sentence-bert-nli
+
+languages: []  # auto-detect all languages
+language_pairs: []  # auto-generate all A->B pairs where A!=B
+
+splits:
+  random:
+    train_frac: 0.7
+    dev_frac: 0.1
+    test_frac: 0.2
+    seed: 42
+  lolo:
+    target: null
+  filters:
+    shot_types: []
+
+bm25:
+  tokenizer: whitespace
+  k1: 1.5
+  b: 0.75
+
+classification:
+  estimator: logistic_regression
+  params:
+    penalty: l2
+    solver: liblinear
+    max_iter: 500
+    class_weight: null
+    C: 1.0
+  calibration:
+    method: histogram
+    bins: 15
+
+hard_negatives:
+  metric: token_set_ratio
+  threshold: 70
+  max_negatives_per_query: 10
+
+embedding_prompts:
+  sentence-transformers/paraphrase-multilingual-mpnet-base-v2:
+    query_prefix: ""
+    doc_prefix: ""
+  sentence-transformers/distiluse-base-multilingual-cased-v2:
+    query_prefix: ""
+    doc_prefix: ""
+  sentence-transformers/paraphrase-xlm-r-multilingual-v1:
+    query_prefix: ""
+    doc_prefix: ""
+  intfloat/multilingual-e5-large-instruct:
+    query_prefix: "Instruct: "
+    doc_prefix: "Passage: "
+  thenlper/gte-multilingual-base:
+    query_prefix: ""
+    doc_prefix: ""
+  sentence-transformers/LaBSE:
+    query_prefix: ""
+    doc_prefix: ""
+  l3cube-pune/indic-sentence-similarity-sbert:
+    query_prefix: ""
+    doc_prefix: ""
+  l3cube-pune/indic-sentence-bert-nli:
+    query_prefix: ""
+    doc_prefix: ""
+
+logging:
+  level: INFO
+  warnings_as_errors: true
+
+output:
+  results_dir: results
+  visualizations_dir: visualizations
+  logs_dir: results/logs

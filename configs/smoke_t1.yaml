@@ -1,0 +1,67 @@
+seed: 42
+device: auto
+num_workers: 0
+batch_size: 32
+
+tasks: [t1_mono_retrieval]
+
+backbones:
+  - bge-m3
+
+languages: [hin, tam]
+language_pairs: []
+
+splits:
+  random:
+    train_frac: 0.7
+    dev_frac: 0.1
+    test_frac: 0.2
+    seed: 42
+  lolo:
+    target: null
+  filters:
+    shot_types: []
+
+top_k: [1, 5, 10]
+
+bm25:
+  tokenizer: whitespace
+  k1: 1.5
+  b: 0.75
+
+classification:
+  estimator: logistic_regression
+  params:
+    penalty: l2
+    solver: liblinear
+    max_iter: 200
+    class_weight: null
+    C: 1.0
+  calibration:
+    method: temperature
+    bins: 15
+
+hard_negatives:
+  metric: token_set_ratio
+  threshold: 70
+  max_negatives_per_query: 5
+
+embedding_prompts:
+  bge-m3:
+    query_prefix: "Represent this sentence for searching relevant passages: "
+    doc_prefix: "Represent this sentence for retrieving relevant passages: "
+  e5-large-instruct:
+    query_prefix: "Instruct: "
+    doc_prefix: "Passage: "
+  labse:
+    query_prefix: ""
+    doc_prefix: ""
+
+logging:
+  level: INFO
+  warnings_as_errors: true
+
+output:
+  results_dir: results
+  visualizations_dir: visualizations
+  logs_dir: results/logs

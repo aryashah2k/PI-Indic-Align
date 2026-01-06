@@ -1,0 +1,78 @@
+seed: 42
+device: auto
+num_workers: 0
+batch_size: 64
+
+tasks: [t4_classification]
+
+backbones:
+  - bge-m3
+  - intfloat/multilingual-e5-large-instruct
+  - sentence-transformers/LaBSE
+  - l3cube-pune/indic-sentence-similarity-sbert
+  - l3cube-pune/indic-sentence-bert-nli
+
+languages: []
+language_pairs: []
+
+splits:
+  random:
+    train_frac: 0.7
+    dev_frac: 0.1
+    test_frac: 0.2
+    seed: 42
+  lolo:
+    target: hin  # set the held-out language here
+  filters:
+    shot_types: []
+
+top_k: [1, 5, 10]
+
+classification:
+  estimator: logistic_regression
+  params:
+    penalty: l2
+    solver: liblinear
+    max_iter: 500
+    class_weight: null
+    C: 1.0
+  calibration:
+    method: histogram
+    bins: 15
+
+hard_negatives:
+  metric: token_set_ratio
+  threshold: 70
+  max_negatives_per_query: 10
+
+embedding_prompts:
+  bge-m3:
+    query_prefix: "Represent this sentence for searching relevant passages: "
+    doc_prefix: "Represent this sentence for retrieving relevant passages: "
+  intfloat/multilingual-e5-large-instruct:
+    query_prefix: "Instruct: "
+    doc_prefix: "Passage: "
+  sentence-transformers/LaBSE:
+    query_prefix: ""
+    doc_prefix: ""
+  l3cube-pune/indic-sentence-similarity-sbert:
+    query_prefix: ""
+    doc_prefix: ""
+  l3cube-pune/indic-sentence-bert-nli:
+    query_prefix: ""
+    doc_prefix: ""
+  e5-large-instruct:
+    query_prefix: "Instruct: "
+    doc_prefix: "Passage: "
+  labse:
+    query_prefix: ""
+    doc_prefix: ""
+
+logging:
+  level: INFO
+  warnings_as_errors: true
+
+output:
+  results_dir: results
+  visualizations_dir: visualizations
+  logs_dir: results/logs

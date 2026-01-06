@@ -1,0 +1,39 @@
+{
+  "task": "t1_mono_retrieval",
+  "backbone": "sentence-transformers/paraphrase-multilingual-mpnet-base-v2",
+  "lang_or_pair": "mal",
+  "split_tag": "dev",
+  "timestamp": "20251008T205046Z",
+  "metrics": {
+    "recall": {
+      "1": 0.08991170994414302,
+      "5": 0.17163506776912452,
+      "10": 0.2169813209473663
+    },
+    "mrr@10": 0.12506536826292977,
+    "ndcg@10": 0.14670184258046606
+  },
+  "meta": {
+    "config_path": "configs/prod_t1t3.yaml",
+    "seed": 42,
+    "system": {
+      "hostname": "8b861967a889",
+      "python": "3.10.12",
+      "time_utc": "20251008T205046Z",
+      "git_hash": null,
+      "packages": {
+        "sentence-transformers": "3.0.1",
+        "torch": "2.8.0",
+        "numpy": "2.2.6",
+        "scikit-learn": "1.5.1",
+        "ranx": "0.3.20",
+        "rank-bm25": "0.2.2",
+        "netcal": "1.3.5",
+        "rapidfuzz": "3.9.6"
+      },
+      "cuda_available": true,
+      "cuda_device_count": 2,
+      "cuda_device": "NVIDIA RTX A6000"
+    }
+  }
+}

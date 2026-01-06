@@ -1,0 +1,60 @@
+{
+  "task": "t4_classification",
+  "backbone": "l3cube-pune/indic-sentence-bert-nli",
+  "lang_or_pair": "all",
+  "split_tag": "dev_test",
+  "timestamp": "20251004T072047Z",
+  "metrics": {
+    "dev": {
+      "base": {
+        "auroc": 0.6669571956484242,
+        "auprc": 0.4296717595606896,
+        "accuracy": 0.7515962609184247
+      },
+      "calibrated": {
+        "auroc": 0.6600888150742833,
+        "auprc": 0.3912419177179325,
+        "accuracy": 0.7539459569903458
+      },
+      "ece_base": 0.4954194197240401,
+      "ece_calibrated": 0.4988506921387342
+    },
+    "test": {
+      "base": {
+        "auroc": 0.6754394791702973,
+        "auprc": 0.44806859589614356,
+        "accuracy": 0.752592062924562
+      },
+      "calibrated": {
+        "auroc": 0.6684880554051085,
+        "auprc": 0.4056778552182221,
+        "accuracy": 0.758210327391593
+      },
+      "ece_base": 0.49613888066358763,
+      "ece_calibrated": 0.5030645078911078
+    }
+  },
+  "meta": {
+    "config_path": "configs/prod_t41.yaml",
+    "seed": 42,
+    "system": {
+      "hostname": "skynet",
+      "python": "3.12.3",
+      "time_utc": "20251004T072047Z",
+      "git_hash": null,
+      "packages": {
+        "sentence-transformers": "3.0.1",
+        "torch": "2.8.0",
+        "numpy": "2.3.3",
+        "scikit-learn": "1.5.1",
+        "ranx": "0.3.20",
+        "rank-bm25": "0.2.2",
+        "netcal": "1.3.5",
+        "rapidfuzz": "3.9.6"
+      },
+      "cuda_available": true,
+      "cuda_device_count": 1,
+      "cuda_device": "NVIDIA RTX A6000"
+    }
+  }
+}

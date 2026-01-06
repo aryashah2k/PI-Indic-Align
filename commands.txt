@@ -1,0 +1,52 @@
+# Environment setup (Linux, CUDA available)
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+# Core deps (pin stable versions)
+pip install torch --index-url https://download.pytorch.org/whl/cu121
+pip install sentence-transformers==3.0.1 ranx==0.3.20 rank-bm25==0.2.2 scikit-learn==1.5.1 netcal==1.3.5 rapidfuzz==3.9.6 PyYAML==6.0.2 tqdm==4.66.4
+
+# Smoke tests (subset languages: hin, tam; backbone: bge-m3)
+
+# T1: Monolingual Persona→Instruction retrieval (+ artifacts, metrics, viz)
+PYTHONWARNINGS=error python -m src.runner configs/smoke_t1.yaml
+
+# T2: Cross-lingual Persona(LA)→Instruction(LB) retrieval (aligned by id)
+PYTHONWARNINGS=error python -m src.runner configs/smoke_t2.yaml
+
+# T3: Reverse retrieval Instruction→Persona (mono + xling)
+PYTHONWARNINGS=error python -m src.runner configs/smoke_t3.yaml
+
+# T4: Compatibility Classification with calibration + ECE
+PYTHONWARNINGS=error python -m src.runner configs/smoke_t4.yaml
+
+# T5: Hard-negative mining report (RapidFuzz)
+PYTHONWARNINGS=error python -m src.runner configs/smoke_t5.yaml
+
+# LOLO Classification (set target in lolo_splits.yaml, e.g., hin)
+# Note: trains on N-1 languages, tests on held-out
+PYTHONWARNINGS=error python -m src.runner configs/lolo_splits.yaml
+
+# Baselines (optional production example): Full T1–T3 across multiple backbones
+PYTHONWARNINGS=error python -m src.runner configs/baselines.yaml
+
+# =============================
+# Production Runs (Full Dataset)
+# =============================
+
+# T1–T3 Retrieval across all languages and pairs (bge-m3, LaBSE)
+PYTHONWARNINGS=error python -m src.runner configs/prod_t1t3.yaml
+
+# T4 Classification across all languages (with robust histogram calibration)
+PYTHONWARNINGS=error python -m src.runner configs/prod_t4.yaml
+
+# T5 Hard-Negative Mining report across all languages
+PYTHONWARNINGS=error python -m src.runner configs/prod_t5.yaml
+
+# LOLO Classification (run once per held-out language)
+# Example: held-out = hin
+sed -i 's/^\(\s*target:\s*\).*/\1hin/' configs/lolo_splits.yaml && \
+PYTHONWARNINGS=error python -m src.runner configs/lolo_splits.yaml
+# Example: held-out = tam
+sed -i 's/^\(\s*target:\s*\).*/\1tam/' configs/lolo_splits.yaml && \
+PYTHONWARNINGS=error python -m src.runner configs/lolo_splits.yaml
